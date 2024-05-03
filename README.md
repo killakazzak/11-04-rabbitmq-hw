@@ -123,6 +123,12 @@ $ pip install pika
 
 ### Решение Задание 2. Отправка и получение сообщений
 
+Установка библиотеки pika
+
+```bash
+apt install python3-pip
+pip3 install pika
+```
 ---
 
 ### Задание 3. Подготовка HA кластера
