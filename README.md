@@ -95,6 +95,7 @@ rabbitmqctl set_permissions -p / tenda ".*" ".*" ".*"
 
 ```bash
 rabbitmqctl enable_feature_flag all
+systemctl restart rabbitmq-server.service
 ```
 
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/1f00cbae-b43a-4ecd-b40e-a8592850d1a2)
