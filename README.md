@@ -123,12 +123,21 @@ $ pip install pika
 
 ### Решение Задание 2. Отправка и получение сообщений
 
+Проверка версии python
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/bf1078e8-0fd0-4b6c-b86b-04fc053bcfb9)
+
+
 Установка библиотеки pika
 
 ```bash
 apt install python3-pip
 pip3 install pika
 ```
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/86f3c359-2a14-43f0-8379-2526a4bcf6e5)
+
+
 ---
 
 ### Задание 3. Подготовка HA кластера
