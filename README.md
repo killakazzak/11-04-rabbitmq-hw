@@ -1,159 +1,77 @@
-# Домашнее задание к занятию "`Git`" - `Тен Денис`
+# Домашнее задание к занятию "`Очереди RabbitMQ`" - `Тен Денис`
 
 
-### Инструкция по выполнению домашнего задания
+### Задание 1. Установка RabbitMQ
 
-   1. Сделайте `fork` данного репозитория к себе в Github и переименуйте его по названию или номеру занятия, например, https://github.com/имя-вашего-репозитория/git-hw или  https://github.com/имя-вашего-репозитория/7-1-ansible-hw).
-   2. Выполните клонирование данного репозитория к себе на ПК с помощью команды `git clone`.
-   3. Выполните домашнее задание и заполните у себя локально этот файл README.md:
-      - впишите вверху название занятия и вашу фамилию и имя
-      - в каждом задании добавьте решение в требуемом виде (текст/код/скриншоты/ссылка)
-      - для корректного добавления скриншотов воспользуйтесь [инструкцией "Как вставить скриншот в шаблон с решением](https://github.com/netology-code/sys-pattern-homework/blob/main/screen-instruction.md)
-      - при оформлении используйте возможности языка разметки md (коротко об этом можно посмотреть в [инструкции  по MarkDown](https://github.com/netology-code/sys-pattern-homework/blob/main/md-instruction.md))
-   4. После завершения работы над домашним заданием сделайте коммит (`git commit -m "comment"`) и отправьте его на Github (`git push origin`);
-   5. Для проверки домашнего задания преподавателем в личном кабинете прикрепите и отправьте ссылку на решение в виде md-файла в вашем Github.
-   6. Любые вопросы по выполнению заданий спрашивайте в чате учебной группы и/или в разделе “Вопросы по заданию” в личном кабинете.
-   
-Желаем успехов в выполнении домашнего задания!
-   
-### Дополнительные материалы, которые могут быть полезны для выполнения задания
+Используя Vagrant или VirtualBox, создайте виртуальную машину и установите RabbitMQ.
+Добавьте management plug-in и зайдите в веб-интерфейс.
 
-1. [Руководство по оформлению Markdown файлов](https://gist.github.com/Jekins/2bf2d0638163f1294637#Code)
+*Итогом выполнения домашнего задания будет приложенный скриншот веб-интерфейса RabbitMQ.*
 
 ---
 
-### Задание 1
+### Задание 2. Отправка и получение сообщений
 
-#### Создание репозитория
-![Создание репозитория](https://github.com/killakazzak/8-1-git-hw/blob/main/img/2024-02-28_16-32-21.jpg)
+Используя приложенные скрипты, проведите тестовую отправку и получение сообщения.
+Для отправки сообщений необходимо запустить скрипт producer.py.
 
-```
-git clone https://github.com/killakazzak/netology.git
-```
-![(https://github.com/killakazzak/8-1-git-hw/blob/main/img/1.jpg)](https://github.com/killakazzak/8-1-git-hw/blob/main/img/1.png)
-```
-git config --global user.name "Denis Ten"
-git config --global user.email "denis.a.ten@gmail.com"
-git status
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/2.png)
-```
-echo "Hello World!" >> README.md
-git status
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/3.png)
-```
-git diff
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/4.png)
+Для работы скриптов вам необходимо установить Python версии 3 и библиотеку Pika.
+Также в скриптах нужно указать IP-адрес машины, на которой запущен RabbitMQ, заменив localhost на нужный IP.
 
+```shell script
+$ pip install pika
 ```
-git add README.md
-git diff --staged
-git status
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/6.png)
-```
-git commit -m 'First commit'
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/7.png)
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/8.png)
-```
-git remote set-url origin https://killakazzak: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@github.com/killakazzak/netology.git
-git push origin main
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/9.png)
 
-[Ссылка на commit](https://github.com/killakazzak/netology/commit/22f3d2506c1b15c3ab6f0682a188c405f8e54892)
+Зайдите в веб-интерфейс, найдите очередь под названием hello и сделайте скриншот.
+После чего запустите второй скрипт consumer.py и сделайте скриншот результата выполнения скрипта
+
+*В качестве решения домашнего задания приложите оба скриншота, сделанных на этапе выполнения.*
+
+Для закрепления материала можете попробовать модифицировать скрипты, чтобы поменять название очереди и отправляемое сообщение.
 
 ---
 
-### Задание 2
+### Задание 3. Подготовка HA кластера
 
-```
-touch .gitignore
-git status
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/21.png)
-```
-git add .gitignore
-git status
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/22.png)
-```
-echo "*.pyc" >> .gitignore && echo "cache/" >> .gitignore
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/23.png)
-```
-git add .gitignore
-git commit -m "Second Commit"
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/24.png)
-```
-git push origin main
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/25.png)
+Используя Vagrant или VirtualBox, создайте вторую виртуальную машину и установите RabbitMQ.
+Добавьте в файл hosts название и IP-адрес каждой машины, чтобы машины могли видеть друг друга по имени.
 
-[Ссылка на README.md](https://github.com/killakazzak/netology/blob/0d2269d19d0a4587a9e5c471208812acfdc84ecc/README.md)
+Пример содержимого hosts файла:
+```shell script
+$ cat /etc/hosts
+192.168.0.10 rmq01
+192.168.0.11 rmq02
+```
+После этого ваши машины могут пинговаться по имени.
 
-### Задание 3
-```
-git branch dev
-git checkout dev
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/31.png)
-```
-echo "Всем привет!" > test.sh
-git add test.sh
-git commit -m "Commit message"
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/32.png)
-```
-git checkout main
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/33.png)
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/34.png)
+Затем объедините две машины в кластер и создайте политику ha-all на все очереди.
 
-```
-git merge dev
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/35.png)
-```
-git pull
-git push
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/36.png)
+*В качестве решения домашнего задания приложите скриншоты из веб-интерфейса с информацией о доступных нодах в кластере и включённой политикой.*
 
-[Ссылка на граф](https://github.com/killakazzak/netology/network)
-### Задание 4
-```
-git branch conflict
-git checkout conflict
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/41.png)
-```
-git add test.sh
-git commit -m "conflict commit"
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/42.png)
-```
-git push origin conflict
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/43.png)
-```
-git add test.sh
-git commit -m "commit temp"
-git push origin main
-git merge conflict
-git add test.sh
-git commit -m "Resolved conflict in test.sh"
-git push origin main
-```
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/44.png)
-![](https://github.com/killakazzak/8-1-git-hw/blob/main/img/45.png)
+Также приложите вывод команды с двух нод:
 
-[Ссылка на файл test.sh](https://github.com/killakazzak/netology/blob/main/test.sh)
+```shell script
+$ rabbitmqctl cluster_status
+```
+
+Для закрепления материала снова запустите скрипт producer.py и приложите скриншот выполнения команды на каждой из нод:
+
+```shell script
+$ rabbitmqadmin get queue='hello'
+```
+
+После чего попробуйте отключить одну из нод, желательно ту, к которой подключались из скрипта, затем поправьте параметры подключения в скрипте consumer.py на вторую ноду и запустите его.
+
+*Приложите скриншот результата работы второго скрипта.*
 
 
+## Дополнительные задания (со звёздочкой*)
+Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
+### * Задание 4. Ansible playbook
+
+Напишите плейбук, который будет производить установку RabbitMQ на любое количество нод и объединять их в кластер.
+При этом будет автоматически создавать политику ha-all.
+
+*Готовый плейбук разместите в своём репозитории.*
 
