@@ -138,6 +138,48 @@ pip3 install pika
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/86f3c359-2a14-43f0-8379-2526a4bcf6e5)
 
 
+```python
+#!/usr/bin/env python3 # coding=utf-8
+import pika
+
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+channel.basic_publish(exchange='', routing_key='hello', body='Hello World!')
+connection.close()
+~
+```
+
+Проверка запуска скрипта producer.py
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/f7afce53-2663-4be9-a771-1a64701172c8)
+
+
+Проверка запуска скрипта consumer.py
+
+```python
+#!/usr/bin/env python # coding=utf-8
+import pika
+
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+
+def callback(ch, method, properties, body):
+    print(" [x] Received %r" % body)
+
+channel.basic_consume(queue='hello', on_message_callback=callback,auto_ack=False)
+channel.start_consuming()
+```
+
+Проверка
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/bfe64c00-3c03-4312-9c0e-7463d4c285a7)
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/c207d843-8dfc-4fa6-ac2a-2a53c2786953)
+
+
+
+
 ---
 
 ### Задание 3. Подготовка HA кластера
