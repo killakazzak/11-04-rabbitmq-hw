@@ -154,6 +154,8 @@ connection.close()
 
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/f7afce53-2663-4be9-a771-1a64701172c8)
 
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/91696fd0-d91d-4a90-bc0b-27639c2c3a3d)
+
 
 Проверка запуска скрипта consumer.py
 
@@ -177,6 +179,7 @@ channel.start_consuming()
 
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/c207d843-8dfc-4fa6-ac2a-2a53c2786953)
 
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/9df7b843-3ac3-48a2-8db5-05c485b01e2c)
 
 
 
