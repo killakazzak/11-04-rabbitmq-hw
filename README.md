@@ -73,7 +73,7 @@ sudo apt-get install -y erlang-base \
 sudo apt-get install rabbitmq-server -y --fix-missing
 ```
 
-Включаем Web-интерфейс
+Включение плагина управления RabbitMQ (RabbitMQ Management Plugin).
 
 ```bash
 rabbitmq-plugins enable rabbitmq_management
