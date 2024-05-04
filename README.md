@@ -403,8 +403,13 @@ ssh-copy-id denis@ubuntu22-client
 ```bash
 cp /home/denis/.ssh/authorized_keys /root/.ssh/
 ```
+На сервере rocky8-server настраиваем Ansible
 
-
+```bash
+mkdir ansible
+cd ansible
+```
+Создаем inventory файл
 
 
 
