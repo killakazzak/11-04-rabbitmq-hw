@@ -431,8 +431,8 @@ ansible servers -m ping
 
 Создаем Ansible playbook
 
-
----yaml
+```yaml
+---
 - name: Установка и настройка RabbitMQ
   hosts: servers
   become: true
