@@ -409,10 +409,20 @@ cp /home/denis/.ssh/authorized_keys /root/.ssh/
 mkdir ansible
 cd ansible
 ```
-Создаем inventory файл
+Создаем inventory файл inventory.ini
 
+```
+[servers]
+ubuntu22-server ansible_host=10.159.86.95
+ubuntu22-client ansible_host=10.159.86.98
+```
+Проверяем доступ серверов
 
+```bash
+ansible servers -i inventory.ini -m ping
+```
 
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/57cac1ad-bd70-4113-bb41-61d0a9f285a2)
 
 
 
