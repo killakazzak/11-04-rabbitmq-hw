@@ -432,7 +432,7 @@ ansible servers -m ping
 Создаем Ansible playbook
 
 
----
+---yaml
 - name: Установка и настройка RabbitMQ
   hosts: servers
   become: true
@@ -466,7 +466,7 @@ ansible servers -m ping
         pattern: ".*"
         definition: '{"ha-mode":"all"}'
         state: present
-
+```
 
 
 
