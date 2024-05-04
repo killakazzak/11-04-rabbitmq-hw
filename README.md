@@ -223,14 +223,128 @@ $ rabbitmqadmin get queue='hello'
 
 Устанавливаем по инструкции из пункта 1 RabbitMQ на 2й сервер.
 
-Добавляем 2ю ноду в кластер
+Добавление в файл /etc/hosts - запись
+
+```
+10.159.86.98 ubuntu22-client
+10.159.86.95 ubuntu22-server
+```
+Копирование cookie-файла /var/lib/rabbitmq/.erlang.cookie сервера ubuntu22-server на сервер ubuntu22-client (необходимо для аутентификации нод)
+
+```bash
+scp  /var/lib/rabbitmq/.erlang.cookie denis@10.159.86.98:/home/denis/
+```
+Выставление прав доступа на cookie-файл на сервере ubuntu22-client
+
+```bash
+cp /home/denis/.erlang.cookie /var/lib/rabbitmq/
+chmod 400 /var/lib/rabbitmq/.erlang.cookie
+```
+Добавление 2й ноды в кластер
 
 ```bash
 rabbitmqctl stop_app
-rabbitmqctl join_cluster {ip_addr or dns name}
+rabbitmqctl join_cluster rabbit@ubuntu22-server
 rabbitmqctl start_app
 rabbitmqctl cluster_status
 ```
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/a8c459a0-7155-4934-bb18-0720d4112cfb)
+
+Создание политики репликации
+
+```
+rabbitmqctl set_policy ha-all "" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+```
+Проверка применения политики
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/dd80bab3-ff14-4c6f-bb6f-e4308284169e)
+
+Вопрос: Как можно определить какая функция Deprecated ?
+
+Проверка состояния кластера
+
+```bash
+rabbitmqctl cluster_status
+```
+
+```
+Cluster status of node rabbit@ubuntu22-server ...
+Basics
+
+Cluster name: rabbit@ubuntu22-server
+Total CPU cores available cluster-wide: 16
+
+Disk Nodes
+
+rabbit@ubuntu22-client
+rabbit@ubuntu22-server
+
+Running Nodes
+
+rabbit@ubuntu22-client
+rabbit@ubuntu22-server
+
+Versions
+
+rabbit@ubuntu22-server: RabbitMQ 3.13.2 on Erlang 26.2.4
+rabbit@ubuntu22-client: RabbitMQ 3.13.2 on Erlang 26.2.4
+
+CPU Cores
+
+Node: rabbit@ubuntu22-server, available CPU cores: 8
+Node: rabbit@ubuntu22-client, available CPU cores: 8
+
+Maintenance status
+
+Node: rabbit@ubuntu22-server, status: not under maintenance
+Node: rabbit@ubuntu22-client, status: not under maintenance
+
+Alarms
+
+(none)
+
+Network Partitions
+
+(none)
+
+Listeners
+
+Node: rabbit@ubuntu22-server, interface: [::], port: 15672, protocol: http, purpose: HTTP API
+Node: rabbit@ubuntu22-server, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
+Node: rabbit@ubuntu22-server, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
+Node: rabbit@ubuntu22-client, interface: [::], port: 15672, protocol: http, purpose: HTTP API
+Node: rabbit@ubuntu22-client, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
+Node: rabbit@ubuntu22-client, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
+
+Feature flags
+
+Flag: classic_mirrored_queue_version, state: enabled
+Flag: classic_queue_type_delivery_support, state: enabled
+Flag: detailed_queues_endpoint, state: enabled
+Flag: direct_exchange_routing_v2, state: enabled
+Flag: drop_unroutable_metric, state: enabled
+Flag: empty_basic_get_metric, state: enabled
+Flag: feature_flags_v2, state: enabled
+Flag: implicit_default_bindings, state: enabled
+Flag: khepri_db, state: disabled
+Flag: listener_records_in_ets, state: enabled
+Flag: maintenance_mode_status, state: enabled
+Flag: message_containers, state: enabled
+Flag: quorum_queue, state: enabled
+Flag: quorum_queue_non_voters, state: enabled
+Flag: restart_streams, state: enabled
+Flag: stream_filtering, state: enabled
+Flag: stream_queue, state: enabled
+Flag: stream_sac_coordinator_unblock_group, state: enabled
+Flag: stream_single_active_consumer, state: enabled
+Flag: stream_update_config_command, state: enabled
+Flag: tracking_records_in_ets, state: enabled
+Flag: user_limits, state: enabled
+Flag: virtual_host_metadata, state: enabled
+```
+
+
+
 
 
 ## Дополнительные задания (со звёздочкой*)
