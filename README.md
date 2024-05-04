@@ -364,3 +364,57 @@ Flag: virtual_host_metadata, state: enabled
 
 ### * Решение Задание 4. Ansible playbook
 
+Установка Ansible на сервер управления rocky8-server
+
+```bash
+yum install ansible
+```
+Проверка
+
+```bash
+ansible --version
+```
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/022c5f96-4396-4883-a7dc-a8c2894d6a09)
+
+Подключение сервера управления rocky8-server к серверам RabbitMQ ubuntu22-server и ubuntu22-client
+
+Генерируем пару ключей (закрытый id_rsa и открытый id_rsa.pub) SSH типа RSA на сервере rocky8-server
+
+```bash
+ssh-keygen -t rsa
+```
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/d33d1ab9-971d-4f6f-8432-05700d37b180)
+
+Добавляем записи в файл /etc/hosts на всех серверах
+
+```bash
+echo -e "10.159.86.95 ubuntu22-server\n10.159.86.98 ubuntu22-client\n10.159.86.79 rocky8-server" >> /etc/hosts
+```
+Копируем открытый ключ SSH с сервера rocky8-server на сервера ubuntu22-server и ubuntu22-client
+
+```bash
+ssh-copy-id denis@ubuntu22-server
+ssh-copy-id denis@ubuntu22-client
+```
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/18caaad4-3e2d-422d-8f29-43d9765e0b5a)
+
+На серверах ubuntu22-server и ubuntu22-client копируем открый ключ SSH из домашеней директории пользователя denis в директорию пользователя root
+
+```bash
+cp /home/denis/.ssh/authorized_keys /root/.ssh/
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
