@@ -416,17 +416,56 @@ cd ansible
 ubuntu22-server ansible_host=10.159.86.95
 ubuntu22-client ansible_host=10.159.86.98
 ```
-Проверяем доступ серверов
+На сервере rocky8-server правим конфигурационный файл /etc/ansible/ansible.cfg
 
 ```bash
-ansible servers -i inventory.ini -m ping
+[defaults]
+inventory = /root/ansible/inventory.ini
+```
+Проверяем доступ серверовh
+```bash
+ansible servers -m ping
 ```
 
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/57cac1ad-bd70-4113-bb41-61d0a9f285a2)
 
+Создаем Ansible playbook
 
 
+---
+- name: Установка и настройка RabbitMQ
+  hosts: servers
+  become: true
+  vars:
+    rabbitmq_cluster_nodes: "{{ groups['servers'] }}"
+    rabbitmq_ha_policy: "ha-all"
+  tasks:
+    - name: Установка пакетов RabbitMQ
+      apt:
+        name: rabbitmq-server
+        state: present
 
+    - name: Запуск службы RabbitMQ
+      service:
+        name: rabbitmq-server
+        state: started
+        enabled: true
+
+    - name: Добавление узлов кластера RabbitMQ
+      rabbitmq_cluster:
+        rabbitmqctl: /usr/sbin/rabbitmqctl
+        node: "{{ inventory_hostname }}"
+        cluster_nodes: "{{ rabbitmq_cluster_nodes }}"
+        state: present
+
+    - name: Создание политики ha-all
+      rabbitmq_policy:
+        rabbitmqctl: /usr/sbin/rabbitmqctl
+        name: "{{ rabbitmq_ha_policy }}"
+        vhost: /
+        pattern: ".*"
+        definition: '{"ha-mode":"all"}'
+        state: present
 
 
 
