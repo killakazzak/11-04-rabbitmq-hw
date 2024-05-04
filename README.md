@@ -250,6 +250,11 @@ rabbitmqctl cluster_status
 ```
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/a8c459a0-7155-4934-bb18-0720d4112cfb)
 
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/2de1ec6b-9e14-4543-9eb8-b082b39c1077)
+
+
+
 Создание политики репликации
 
 ```
