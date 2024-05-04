@@ -429,7 +429,7 @@ ansible servers -m ping
 
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/57cac1ad-bd70-4113-bb41-61d0a9f285a2)
 
-Создаем Ansible playbook rabbitmq.yml
+Создаем Ansible playbook rabbitmq-playbook.yml
 
 ```yaml
 ---
