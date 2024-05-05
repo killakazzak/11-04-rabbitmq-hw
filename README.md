@@ -521,12 +521,16 @@ Ce04jrkNwz6VqtvrjkK+vmDxOFKodW1h06Awe+qBjPcp+upCEbHxcDCv
 ansible-playbook rabbitmq-playbook.yml
 ```
 
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/420de976-64b0-4b41-b104-9f04e965f422)
+
+
 Проверка установки RabbitMQ
 
-
-
-
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/c76ebc5a-df3d-4628-ae69-b5f75298cd8e)
+
+Проверка установки политики ha-all
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/c2ff0df3-7b5c-4d47-b521-f11325e7911e)
 
 
 
