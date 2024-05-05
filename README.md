@@ -439,7 +439,14 @@ ansible servers -m ping
   vars:
     rabbitmq_cluster_nodes: "{{ groups['servers'] }}"
     rabbitmq_ha_policy: "ha-all"
+    source_erlang_cookie_path: "/root/ansible/vars/.erlang.cookie"
+    destination_erlang_cookie_path: "/var/lib/rabbitmq/.erlang.cookie"
   tasks:
+    - name: Установка Erlang
+      apt:
+        name: erlang
+        state: present
+
     - name: Установка пакетов RabbitMQ
       apt:
         name: rabbitmq-server
@@ -451,21 +458,56 @@ ansible servers -m ping
         state: started
         enabled: true
 
-    - name: Добавление узлов кластера RabbitMQ
-      rabbitmq_cluster:
-        rabbitmqctl: /usr/sbin/rabbitmqctl
-        node: "{{ inventory_hostname }}"
-        cluster_nodes: "{{ rabbitmq_cluster_nodes }}"
+    - name: Установка erlang cookie
+      copy:
+        src: "{{ source_erlang_cookie_path }}"
+        dest: "{{ destination_erlang_cookie_path }}"
+        owner: rabbitmq
+        group: rabbitmq
+        mode: '0600'
+
+    - name: Включение rabbitmq_management плагина
+      rabbitmq_plugin:
+        name: rabbitmq_management
+      notify: Restart RabbitMQ
+    
+    - name: Создание пользователя tenda
+      rabbitmq_user:
+        user: tenda
+        password: 0434981
+        tags: administrator
         state: present
 
-    - name: Создание политики ha-all
-      rabbitmq_policy:
-        rabbitmqctl: /usr/sbin/rabbitmqctl
-        name: "{{ rabbitmq_ha_policy }}"
-        vhost: /
-        pattern: ".*"
-        definition: '{"ha-mode":"all"}'
-        state: present
+    - name: Установить разрешения RabbitMQ
+      command: rabbitmqctl set_permissions -p / tenda ".*" ".*" ".*"
+    
+    - name: Остановка узлов кластера
+      command: rabbitmqctl stop_app
+      when: inventory_hostname != "ubuntu22-server"
+
+    - name: Добавление узлов кластера
+      command: rabbitmqctl join_cluster rabbit@ubuntu22-server # Добавление каждого узла кластера
+      loop: "{{ rabbitmq_cluster_nodes }}"
+      when: inventory_hostname != "ubuntu22-server" # Исключаем сервер ubuntu22-server  из списка
+
+    - name: Запуск узлов кластера
+      command: rabbitmqctl start_app
+      when: inventory_hostname != "ubuntu22-server"
+
+    - name: Установка политики HA
+      command: rabbitmqctl set_policy ha-all "^" '{"ha-mode":"all"}' --priority 0 --apply-to queues
+
+    - name: Перезапуск сервиса RabbitMQ
+      service:
+        name: rabbitmq-server
+        state: restarted
+
+  handlers:
+    - name: Restart RabbitMQ
+      service:
+        name: rabbitmq-server
+        state: restarted
+
 ```
 
 
