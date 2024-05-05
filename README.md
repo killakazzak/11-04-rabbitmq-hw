@@ -429,6 +429,12 @@ ansible servers -m ping
 
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/57cac1ad-bd70-4113-bb41-61d0a9f285a2)
 
+Создаем erlang.cookie /root/ansible/vars/.erlang.cookie
+
+```
+Ce04jrkNwz6VqtvrjkK+vmDxOFKodW1h06Awe+qBjPcp+upCEbHxcDCv
+```
+
 Создаем Ansible playbook rabbitmq-playbook.yml
 
 ```yaml
@@ -509,6 +515,19 @@ ansible servers -m ping
         state: restarted
 
 ```
+Запускаем ansible playbook
+
+```bash
+ansible-playbook rabbitmq-playbook.yml
+```
+
+Проверка установки RabbitMQ
+
+
+
+
+![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/c76ebc5a-df3d-4628-ae69-b5f75298cd8e)
+
 
 
 
