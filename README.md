@@ -533,7 +533,7 @@ ansible-playbook rabbitmq-playbook.yml
 ![image](https://github.com/killakazzak/11-04-rabbitmq-hw/assets/32342205/c2ff0df3-7b5c-4d47-b521-f11325e7911e)
 
 
-
+Вопрос по ansible playbook: Просьба высказать мнение по поводу плейбука, его структуры и алгоритма, возможно его можно как то упростить ?
 
 
 
